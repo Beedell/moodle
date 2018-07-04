@@ -1203,6 +1203,7 @@ class qformat_xml extends qformat_default {
         }
         $expout .= "    <penalty>{$question->penalty}</penalty>\n";
         $expout .= "    <hidden>{$question->hidden}</hidden>\n";
+        $expout .= "    <idnumber>{$question->idnumber}</idnumber>\n";
 
         // The rest of the output depends on question type.
         switch($question->qtype) {

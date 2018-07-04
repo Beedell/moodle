@@ -48,6 +48,7 @@ class qformat_xml_test extends question_testcase {
         $q = new stdClass();
         $q->id = 0;
         $q->contextid = 0;
+        $q->idnumber = null;
         $q->category = 0;
         $q->parent = 0;
         $q->questiontextformat = FORMAT_HTML;
@@ -342,6 +343,7 @@ END;
         $qdata->length = 0;
         $qdata->penalty = 0;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $exporter = new qformat_xml();
         $xml = $exporter->writequestion($qdata);
@@ -360,6 +362,7 @@ END;
     <defaultgrade>0</defaultgrade>
     <penalty>0</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
   </question>
 ';
 
@@ -487,6 +490,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 0;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
         $qdata->options = new stdClass();
         $qdata->options->id = 456;
         $qdata->options->questionid = 123;
@@ -516,6 +520,7 @@ END;
     <defaultgrade>1</defaultgrade>
     <penalty>0</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <responseformat>monospaced</responseformat>
     <responserequired>0</responserequired>
     <responsefieldlines>42</responsefieldlines>
@@ -649,6 +654,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 0.3333333;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $qdata->options = new stdClass();
         $qdata->options->shuffleanswers = 1;
@@ -709,6 +715,7 @@ END;
     <defaultgrade>1</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <shuffleanswers>true</shuffleanswers>
     <correctfeedback format="html">
       <text>Well done.</text>
@@ -880,6 +887,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 0.3333333;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $qdata->options = new stdClass();
         $qdata->options->single = 0;
@@ -922,6 +930,7 @@ END;
     <defaultgrade>2</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <single>false</single>
     <shuffleanswers>false</shuffleanswers>
     <answernumbering>abc</answernumbering>
@@ -1053,6 +1062,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 0.1;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $qdata->options = new stdClass();
         $qdata->options->answers = array(
@@ -1083,6 +1093,7 @@ END;
     <defaultgrade>1</defaultgrade>
     <penalty>0.1</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <answer fraction="100" format="plain_text">
       <text>42</text>
       <feedback format="html">
@@ -1183,6 +1194,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 0.3333333;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $qdata->options = new stdClass();
         $qdata->options->usecase = 0;
@@ -1214,6 +1226,7 @@ END;
     <defaultgrade>1</defaultgrade>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <usecase>0</usecase>
     <answer fraction="100" format="plain_text">
       <text>Beta</text>
@@ -1304,6 +1317,7 @@ END;
         $qdata->length = 1;
         $qdata->penalty = 1;
         $qdata->hidden = 0;
+        $qdata->idnumber = null;
 
         $qdata->options = new stdClass();
         $qdata->options->answers = array(
@@ -1330,6 +1344,7 @@ END;
     <defaultgrade>1</defaultgrade>
     <penalty>1</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <answer fraction="100" format="plain_text">
       <text>true</text>
       <feedback format="html">
@@ -1474,6 +1489,7 @@ END;
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
     <hint format="html">
       <text>Hint 1</text>
     </hint>
@@ -1505,6 +1521,7 @@ END;
     </generalfeedback>
     <penalty>0.3333333</penalty>
     <hidden>0</hidden>
+    <idnumber></idnumber>
   </question>
 ';
 
