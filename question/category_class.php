@@ -493,6 +493,14 @@ class question_category_object {
             }
         }
 
+        if (((string) $idnumber !== '') && !empty($tocontextid)) {
+            // While this check already exists in the form validation, this is a backstop preventing unnecessary errors.
+            if ($DB->record_exists('question_categories',
+                    ['idnumber' => $idnumber, 'contextid' => $tocontextid])) {
+                $idnumber = null;
+            }
+        }
+
         // Update the category record.
         $cat = new stdClass();
         $cat->id = $updateid;
