@@ -1303,6 +1303,59 @@ END;
         $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
     }
 
+    public function test_import_truefalse_with_idnumber() {
+        $xml = '  <question type="truefalse">
+    <name>
+      <text>True false question</text>
+    </name>
+    <questiontext format="html">
+      <text>The answer is true.</text>
+    </questiontext>
+    <generalfeedback>
+      <text>General feedback: You should have chosen true.</text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>1</penalty>
+    <hidden>0</hidden>
+    <idnumber>TestIdNum1</idnumber>
+    <answer fraction="100">
+      <text>true</text>
+      <feedback>
+        <text>Well done!</text>
+      </feedback>
+    </answer>
+    <answer fraction="0">
+      <text>false</text>
+      <feedback>
+        <text>Doh!</text>
+      </feedback>
+    </answer>
+  </question>';
+        $xmldata = xmlize($xml);
+
+        $importer = new qformat_xml();
+        $q = $importer->import_truefalse($xmldata['question']);
+
+        $expectedq = new stdClass();
+        $expectedq->qtype = 'truefalse';
+        $expectedq->name = 'True false question';
+        $expectedq->questiontext = 'The answer is true.';
+        $expectedq->questiontextformat = FORMAT_HTML;
+        $expectedq->generalfeedback = 'General feedback: You should have chosen true.';
+        $expectedq->defaultmark = 1;
+        $expectedq->length = 1;
+        $expectedq->penalty = 1;
+        $expectedq->idnumber = 'TestIdNum1';
+
+        $expectedq->feedbacktrue = array('text' => 'Well done!',
+                'format' => FORMAT_HTML);
+        $expectedq->feedbackfalse = array('text' => 'Doh!',
+                'format' => FORMAT_HTML);
+        $expectedq->correctanswer = true;
+
+        $this->assert(new question_check_specified_fields_expectation($expectedq), $q);
+    }
+
     public function test_export_truefalse() {
         $qdata = new stdClass();
         $qdata->id = 12;
@@ -1345,6 +1398,66 @@ END;
     <penalty>1</penalty>
     <hidden>0</hidden>
     <idnumber></idnumber>
+    <answer fraction="100" format="plain_text">
+      <text>true</text>
+      <feedback format="html">
+        <text>Well done!</text>
+      </feedback>
+    </answer>
+    <answer fraction="0" format="plain_text">
+      <text>false</text>
+      <feedback format="html">
+        <text>Doh!</text>
+      </feedback>
+    </answer>
+  </question>
+';
+
+        $this->assert_same_xml($expectedxml, $xml);
+    }
+
+    public function test_export_truefalse_with_idnumber() {
+        $qdata = new stdClass();
+        $qdata->id = 12;
+        $qdata->contextid = \context_system::instance()->id;
+        $qdata->qtype = 'truefalse';
+        $qdata->name = 'True false question';
+        $qdata->questiontext = 'The answer is true.';
+        $qdata->questiontextformat = FORMAT_HTML;
+        $qdata->generalfeedback = 'General feedback: You should have chosen true.';
+        $qdata->generalfeedbackformat = FORMAT_HTML;
+        $qdata->defaultmark = 1;
+        $qdata->length = 1;
+        $qdata->penalty = 1;
+        $qdata->hidden = 0;
+        $qdata->idnumber = 'TestIDNum2';
+
+        $qdata->options = new stdClass();
+        $qdata->options->answers = array(
+                1 => new question_answer(1, 'True', 1, 'Well done!', FORMAT_HTML),
+                2 => new question_answer(2, 'False', 0, 'Doh!', FORMAT_HTML),
+        );
+        $qdata->options->trueanswer = 1;
+        $qdata->options->falseanswer = 2;
+
+        $exporter = new qformat_xml();
+        $xml = $exporter->writequestion($qdata);
+
+        $expectedxml = '<!-- question: 12  -->
+  <question type="truefalse">
+    <name>
+      <text>True false question</text>
+    </name>
+    <questiontext format="html">
+      <text>The answer is true.</text>
+    </questiontext>
+    <generalfeedback format="html">
+      <text>General feedback: You should have chosen true.</text>
+    </generalfeedback>
+    <defaultgrade>1</defaultgrade>
+    <penalty>1</penalty>
+    <hidden>0</hidden>
+    <idnumber>TestIDNum2</idnumber>
     <answer fraction="100" format="plain_text">
       <text>true</text>
       <feedback format="html">
