@@ -1581,4 +1581,23 @@ END;
         $this->assertEquals('/myfolder/', $file->filepath);
         $this->assertEquals(6,            $file->size);
     }
+
+    public function test_create_dummy_question() {
+
+        $testobject = new qformat_xml();
+        $categoryname = 'name1';
+        $categoryinfo = new stdClass();
+        $categoryinfo->info = 'info1';
+        $categoryinfo->infoformat = 'infoformat1';
+        $dummyquestion = $testobject->create_dummy_question($categoryname, $categoryinfo);
+
+        $this->assertEquals('category', $dummyquestion->qtype);
+        $this->assertEquals($categoryname, $dummyquestion->category);
+        $this->assertEquals($categoryinfo->info, $dummyquestion->info);
+        $this->assertEquals($categoryinfo->infoformat, $dummyquestion->infoformat);
+        $this->assertEquals('Switch category to ' . $categoryname, $dummyquestion->name);
+        $this->assertEquals(0, $dummyquestion->id);
+        $this->assertEquals('', $dummyquestion->questiontextformat);
+        $this->assertEquals(0, $dummyquestion->contextid);
+    }
 }

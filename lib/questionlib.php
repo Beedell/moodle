@@ -1182,6 +1182,38 @@ function question_categorylist($categoryid) {
     return $categorylist;
 }
 
+/**
+ * Get all parent categories of a given question category.
+ * @param int $categoryid for which you want to find the parents.
+ * @return array of question category ids of all parents categories.
+ */
+function question_categorylist_parents($categoryid) {
+    global $DB;
+
+    $parent = $DB->get_field('question_categories', 'parent', array('id' => $categoryid));
+
+    // Final list of category ids.
+    if ($parent) {
+        $categorylist = array($parent);
+    } else {
+        return array();
+    }
+
+    $currentid = $parent;
+
+    while ($currentid) {
+        $currentid = $DB->get_field('question_categories', 'parent', array('id' => $currentid));
+        if ($currentid) {
+            $categorylist[] = $currentid;
+        }
+    }
+
+    // Reverse list of category ids.
+    $categorylist = array_reverse($categorylist);
+
+    return $categorylist;
+}
+
 //===========================
 // Import/Export Functions
 //===========================

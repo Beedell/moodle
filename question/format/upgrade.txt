@@ -1,5 +1,18 @@
 This files describes API changes for question import/export format plugins.
 
+=== 3.4 ===
+
+*Saving category description (info) is now supported in Moodle XML import/export format.
+New xml-structure:
+<question type="category">
+	<category>
+		<text>{<Context>}/{$category}</text>
+	</category>
+	<info format="{$format}">
+		<text>{$info_categorydescription}</text>
+	</info>
+</question>
+
 === 2.3 ===
 
 * This plugin type now supports cron in the standard way. If required, Create a
