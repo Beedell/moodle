@@ -167,11 +167,14 @@ class qtype_gapselect_walkthrough_test extends qbehaviour_walkthrough_test_base 
         // Check the initial state.
         $this->check_current_state(question_state::$todo);
         $this->check_current_mark(null);
+        // Note the select options actually contain something the users browser works with like
+        // <span lang="en" class="multilang">cat</span><span lang="ru" class="multilang">кошка</span>
+        // but the DOMNode->textContent returns only the text 'catкошка'.
         $this->check_output_contains_selectoptions(
                 $this->get_contains_select_expectation('p1',
-                        ['1' => 'cat', '2' => 'dog'], null, true),
+                        ['1' => 'catкошка', '2' => 'dogпес'], null, true),
                 $this->get_contains_select_expectation('p2',
-                        ['1' => 'mat', '2' => 'bat'], null, true));
+                        ['1' => 'matковрике', '2' => 'batбита'], null, true));
     }
 
     public function test_choices_containing_dollars() {

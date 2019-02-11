@@ -586,7 +586,9 @@ abstract class question_testcase extends advanced_testcase {
             throw new coding_exception('Unsuitable expectiontion: '.get_class($expectation));
         }
         $dom = new DOMDocument();
-        $dom->loadHTML($html);
+        // Coping with UTF-8 html.
+        $utf8html = mb_convert_encoding($html, 'HTML-ENTITIES', "UTF-8");
+        $dom->loadHTML($utf8html);
         $selects = $dom->getElementsByTagName('select');
         foreach ($selects as $select) {
             if ($select->getAttribute('name') == $expectation->name) {
